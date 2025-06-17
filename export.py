@@ -1,13 +1,8 @@
-#!/usr/bin/env python3
-
+# !/usr/bin/env python3
 from ultralytics import YOLO
 
-vehicle_model = YOLO("./yolov8n.pt")
-plate_model = YOLO("./detection-plate/runs/detect/train/weights/best.pt")
+def yolo_to_coreml(yolo_model: str):
+    model = YOLO(yolo_model)
+    model.export(format="coreml", nms=False)
 
-vehicle_model.export(
-    format="coreml", project="./coreml_models/", name="vehicle_detection", exist_ok=True
-)
-plate_model.export(
-    format="coreml", project="./coreml_models/", name="plate_detection", exist_ok=True
-)
+yolo_to_coreml("./license_plate_detector.pt")
